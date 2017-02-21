@@ -1,14 +1,3 @@
-body {
-    margin: 0;
-    font-family: Arial;
-}
-.container {
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
 .main {
     width: 600px;
     height: 400px;

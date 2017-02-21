@@ -55,7 +55,7 @@ function validateSignUp() {
                 city: form["city"].value,
                 country: form["country"].value
             };
-            var data = new FormData();
+            var data = new FormData(form);
             for (var key in signUpData) {
                 data.append(key, signUpData[key]);
             }
