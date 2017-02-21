@@ -1,0 +1,100 @@
+DROP TABLE IF EXISTS Users;
+
+CREATE TABLE Users (
+  email varchar(50) PRIMARY KEY,
+  password varchar(50),
+  firstname varchar(50),
+  familyname varchar(50),
+  gender varchar (10),
+  city varchar(50),
+  country varchar(50)
+);
+
+INSERT INTO Users VALUES (
+  'test1@test.com',
+  '12345678',
+  'John',
+  'Doe',
+  'Male',
+  'London',
+  'England'
+);
+
+INSERT INTO Users VALUES (
+  'test2@test.com',
+  '12345678',
+  'Jane',
+  'Doe',
+  'Female',
+  'Washington D.C',
+  'USA'
+);
+
+INSERT INTO Users VALUES (
+  'f.hakansson@hotmail.se',
+  '12345678',
+  'Fredrik',
+  'Håkansson',
+  'Male',
+  'Linköping',
+  'Sweden'
+);
+
+INSERT INTO Users VALUES (
+  'test3@test.com',
+  '12345678',
+  'Britney',
+  'Spears',
+  'Female',
+  'Hollywood',
+  'USA'
+);
+
+
+
+DROP TABLE IF EXISTS Messages;
+
+CREATE TABLE Messages (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user varchar(50),
+  author varchar(50),
+  message varchar(200),
+  FOREIGN KEY (user) REFERENCES Users(email),
+  FOREIGN KEY (author) REFERENCES Users(email)
+);
+
+INSERT INTO Messages (user, author, message) VALUES (
+  'test1@test.com',
+  'test2@test.com',
+  'A very pleasant message'
+);
+
+INSERT INTO Messages (user, author, message) VALUES (
+  'test1@test.com',
+  'test2@test.com',
+  'Another very pleasant message'
+);
+
+INSERT INTO Messages (user, author, message) VALUES (
+  'test2@test.com',
+  'test2@test.com',
+  'A very pleasant message'
+);
+
+INSERT INTO Messages (user, author, message) VALUES (
+  'test2@test.com',
+  'test1@test.com',
+  'Another very pleasant message'
+);
+
+DROP TABLE IF EXISTS LoggedInUsers;
+
+CREATE TABLE LoggedInUsers (
+  email varchar(50) PRIMARY KEY,
+  token varchar(128) NOT NULL
+);
+
+INSERT INTO LoggedInUsers VALUES (
+    'test1@test.com',
+    '123'
+)

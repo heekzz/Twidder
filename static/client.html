@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <title>Twidder</title>
+
+    <!-- CSS files -->
+    <link href="css/client.css" type="text/css" rel="stylesheet">
+    <link href="css/bootstrap.css" type="text/css" rel="stylesheet">
+    <link href="css/bootstrap-theme.css" type="text/css" rel="stylesheet">
+
+    <!-- JavaScript files -->
+    <script src="js/client.js" type="text/javascript"></script>
+    <script src="js/bootstrap.js" type="text/javascript"></script>
+
+    <script type="text/view" id="welcomeview">
+
+<div class="container">
+    <div class="main">
+        <div class="left-object">
+            <img src="wimage.png" class="login-img" alt="Twidder Image">
+        </div>
+
+        <div class="right-object">
+            <div class="login">
+                <form id="login-form" onsubmit="return login()" method="post" >
+                    <label>Username:</label>
+                    <input type="text" name="email" required><br>
+                    <label>Password:</label>
+                    <input type="password" name="password" required><br>
+                    <label class="alertText" id="login-alert"></label>
+                    <input type="submit" value="Login">
+                </form>
+            </div>
+
+            <div class="signUp">
+                <h3>Sign up here!</h3>
+                <form id="signUp-form" onsubmit="return validateSignUp()" method="post" >
+                    <label>First name:</label>
+                    <input type="text" name="firstname" required><br>
+                    <label>Family name:</label>
+                    <input type="text" name="familyname" required><br>
+                    <label>Gender:</label>
+                    <select name="gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Non-binary</option>
+                    </select><br>
+                    <label>City:</label>
+                    <input type="text" name="city" required><br>
+                    <label>Country:</label>
+                    <input type="text" name="country" required><br>
+                    <label>Email:</label>
+                    <input type="email" name="email" required><br>
+                    <label>Password:</label>
+                    <input type="password" name="password" required><br>
+                    <label>Repeat pw:</label>
+                    <input type="password" name="password_repeat" required><br>
+                    <label class="alertText" id="signUp-alert"></label>
+                    <input type="submit" value="Sign up">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
+    <script type="text/view" id="profileview" >
+    <div class="container">
+        <div class="main">
+
+            <ul class="tab">
+                <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Home')" id="defaultOpen">Home</a></li>
+                <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Browse')">Browse</a></li>
+                <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Account')">Account</a></li>
+            </ul>
+
+            <div id="Home" class="tabcontent">
+                <div class="block">
+                    <h2>Welcome!</h2>
+                    <p><b>First name:</b> <span id="nameField"></span></p>
+                    <p><b>Family name:</b> <span id="familyField"></span></p>
+                    <p><b>Email:</b> <span id="home-emailField"></span></p>
+                    <p><b>Gender:</b> <span id="genderField"></span></p>
+                    <p><b>City:</b> <span id="cityField"></span></p>
+                    <p><b>Country:</b> <span id="countryField"></span></p>
+                </div>
+                <div class="block">
+                    <h2>Comment wall</h2>
+                    <div id="home-comment-holder"></div>
+                    <textarea id="home-comment-input" class="comment-input" type="text" placeholder="Write comment..."></textarea>
+                    <button id="home-comment-submit" onclick="return postComment('home')" >Add comment</button>
+                    <br>
+                    <br>
+                    <button onclick="return updateComments('home')">Update comments</button>
+                </div>
+            </div>
+
+            <div id="Browse" class="tabcontent">
+                <h3>Browse</h3>
+                <input type="text" id="searchUserText" >
+                <button id="searchUserButton" onclick="return browseUser()">Search user</button>
+                <span class="alertText" id="browseAlert"></span><br>
+                <div id="browseInfo">
+                <hr>
+                    <div class="block">
+                        <p><b>First name:</b> <span id="browse-nameField"></span></p>
+                        <p><b>Family name:</b> <span id="browse-familyField"></span></p>
+                        <p><b>Email:</b> <span id="browse-emailField"></span></p>
+                        <p><b>Gender:</b> <span id="browse-genderField"></span></p>
+                        <p><b>City:</b> <span id="browse-cityField"></span></p>
+                        <p><b>Country:</b> <span id="browse-countryField"></span></p>
+                    </div>
+                    <div class="block">
+                        <h2>Comment wall</h2>
+                        <div id="browse-comment-holder"></div>
+                        <textarea id="browse-comment-input" class="comment-input" type="text" placeholder="Write comment..."></textarea>
+                        <button id="browse-comment-submit" onclick="return postComment('browse')" >Add comment</button>
+                        <br>
+                        <br>
+                        <button onclick="return updateComments('browse')">Update comments</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="Account" class="tabcontent">
+                <h3>Change password</h3>
+                <form id="changePasswordForm" onsubmit="return changePassword()" method="post">
+                    Old password: <input type="password" name="old" ><br>
+                    New password: <input type="password" name="new1" ><br>
+                    Repeat password: <input type="password" name="new2" ><br>
+                    <input type="submit" value="Change password">
+                    <span class="alertText" id="changeAlert"></span>
+                </form>
+
+                <h4>Log Out</h4>
+                <button onclick="logout()" >Log out!</button><br><br>
+            </div>
+
+        </div>
+    </div>
+     </script>
+
+</head>
+<body>
+
+<div id="placeholder"></div>
+</body>
+</html>
