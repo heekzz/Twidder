@@ -1,12 +1,13 @@
 # coding=utf-8
-from flask import Flask, request, json
-import database_helper
-import json
 import hashlib
-import string
+import json
 import random
+import string
+from flask import Flask, request, json
 from gevent.wsgi import WSGIServer
 from geventwebsocket.handler import WebSocketHandler
+
+import database_helper
 
 __author__ = 'Fredrik Håkansson (freha309)'
 
