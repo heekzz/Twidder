@@ -1,11 +1,17 @@
-var webSocket = new WebSocket("ws://localhost:5000/socket");
-webSocket.onmessage = function (event) {
-    if (event.data == "logout") {
-        sessionStorage.removeItem("token");
-        displayView();
-    }
-};
+function connectSocket() {
+    var webSocket = new WebSocket("ws://localhost:5000/socket");
+    webSocket.onmessage = function (event) {
+        if (event.data == "logout") {
+            sessionStorage.removeItem("token");
+            displayView();
+        }
+    };
+    webSocket.onopen = function () {
+        var socketMessage = {"message": "login", "token": getToken()};
+        webSocket.send(JSON.stringify(socketMessage));
+    };
 
+}
 
 displayView = function(){
     // the code required to display a view
@@ -16,8 +22,7 @@ displayView = function(){
             document.getElementById("placeholder").innerHTML = view.innerHTML;
 
             getUserData();
-            // Get the element with id="defaultOpen" and click on it
-            document.getElementById("defaultOpen").click();
+            listUsers();
         }
         else {
             view = document.getElementById("welcomeview");
@@ -63,6 +68,7 @@ function validateSignUp() {
             var callback = function (response) {
                 if (response.success == true) {
                     sessionStorage.setItem("token", response.data.token);
+                    connectSocket();
                     displayView();
                 } else {
                     if (response.message == "Not authenticated")
@@ -89,8 +95,7 @@ function login() {
             token = response.data.token;
             console.log("Token: " + token);
             sessionStorage.setItem("token", token);
-            var socketMessage = {"message": "login", "token": token};
-            webSocket.send(JSON.stringify(socketMessage));
+            connectSocket();
             displayView();
         } else {
             sessionStorage.removeItem("token");
@@ -149,20 +154,6 @@ function changePassword() {
     return false;
 }
 
-function openTab(evt, tabName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " active";
-}
-
 
 function getUserData() {
     var callback = function (response) {
@@ -204,21 +195,21 @@ function updateComments(page, email) {
     }
 
     var callback = function (response) {
+        var commentHolder =  document.getElementById(page + "-comment-holder");
         if (response.success) {
 
             var comments = response.data;
-            var commentHolder =  document.getElementById(page + "-comment-holder");
             var content = "";
             for (var i = 0; i < comments.length; i++) {
-                content += "<h4 class='comment-header'>" + comments[i].author + ":</h4>";
-                content += "<p class='comment-body'>" + comments[i].message + "</p>";
-                content += "<hr>"
+                content += "<div class='panel panel-default'>";
+                content += "<div class='panel-heading'><b>" + comments[i].author + ":</b></div>";
+                content += "<div class='panel-body'>" + comments[i].message + "</div>";
+                content += "</div>"
             }
 
             commentHolder.innerHTML = content;
         } else {
-            if (response.message = "Not authenticated")
-                displayView()
+            commentHolder.innerHTML = "No posts yet, be the first!";
         }
     };
     httpRequest("GET", "/getUserMessages/"+email+"?token="+getToken(), null, callback);
@@ -266,3 +257,40 @@ function httpRequest(method, url, data, callback) {
         xhttp.send();
 }
 
+function listUsers() {
+    var placeholder = document.getElementById("listUsers")
+    var callback = function (response) {
+        if (response.success) {
+            var users = response.data;
+            var content = "<ul class='list-group'>";
+
+            for (var i = 0;i < users.length; i++) {
+                content += "<li id='list_user_" + i + "' class='list-group-item' draggable='true' ondragstart='drag(event)'>";
+                content += users[i];
+                content += "</li>";
+            }
+            content += "</ul>";
+            placeholder.innerHTML = content;
+            placeholder.style.display = "block"
+        }
+        else {
+            placeholder.style.display = "none"
+        }
+    };
+    httpRequest("GET", "/listAllUsers?token=" + getToken(), null, callback);
+}
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    var val = document.getElementById(data).innerHTML;
+    document.getElementById("searchUserText").value = val;
+}

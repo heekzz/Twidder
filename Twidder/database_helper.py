@@ -60,9 +60,14 @@ def add_user(email, password, firstname, familyname, gender, city, country):
 
 
 # Returns a sqlite3.Row with a user matching the email
-def find_user(email):
-    result = query_db("SELECT * FROM Users WHERE email = ?",
+# If no email is provided all users are returned
+def find_user(email=None):
+    if email is not None:
+        result = query_db("SELECT * FROM Users WHERE email = ?",
                       (email,), one=True)
+    else:
+        result = query_db("SELECT * FROM Users")
+
     if result is None:
         return None
     else:

@@ -7,7 +7,7 @@
     <title>Twidder</title>
 
     <!-- CSS files -->
-    <!-- <link href="css/client.css" type="text/css" rel="stylesheet"> -->
+    <link href="css/client.css" type="text/css" rel="stylesheet">
     <link href="css/bootstrap.css" type="text/css" rel="stylesheet">
     <link href="css/bootstrap-theme.css" type="text/css" rel="stylesheet">
 
@@ -20,11 +20,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-xs-12">
-                    <img src="wimage.png" class="login-img" alt="Twidder Image">
+                    <div class="jumbotron">
+                        <h1>Welcome to Twidder!</h1>
+                        <p>A very social platform</p>
+                    </div>
+                    <img src="wimage.png" class="center-block img-rounded img-responsive" alt="Twidder Image">
                 </div>
 
                 <div class="col-lg-6 col-md-6 col-xs-12">
-                    <div class="login well">
+                    <div class="well">
                         <h3>Login</h3>
                         <form class="form-horizontal" id="login-form" onsubmit="return login()" method="post" >
                             <div class="form-group">
@@ -48,7 +52,7 @@
                         </form>
                     </div>
 
-                    <div class="signUp well">
+                    <div class="well">
                         <h3>Sign up here!</h3>
                         <form class="form-horizontal" id="signUp-form" onsubmit="return validateSignUp()" method="post" >
                             <div class="form-group">
@@ -119,81 +123,147 @@
 
     <script type="text/view" id="profileview" >
         <div class="container">
-            <div class="main">
+            <div class="row">
 
-                <ul class="tab">
-                    <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Home')" id="defaultOpen">Home</a></li>
-                    <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Browse')">Browse</a></li>
-                    <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Account')">Account</a></li>
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+                    <li role="presentation"><a href="#browse" aria-controls="browse" role="tab" data-toggle="tab">Browse</a></li>
+                    <li role="presentation"><a href="#account" aria-controls="account" role="tab" data-toggle="tab">Account</a></li>
                 </ul>
 
-                <div id="Home" class="tabcontent">
-                    <div class="block">
-                        <h2>Welcome!</h2>
-                        <p><b>First name:</b> <span id="nameField"></span></p>
-                        <p><b>Family name:</b> <span id="familyField"></span></p>
-                        <p><b>Email:</b> <span id="home-emailField"></span></p>
-                        <p><b>Gender:</b> <span id="genderField"></span></p>
-                        <p><b>City:</b> <span id="cityField"></span></p>
-                        <p><b>Country:</b> <span id="countryField"></span></p>
-                    </div>
-                    <div class="block">
-                        <h2>Comment wall</h2>
-                        <div id="home-comment-holder"></div>
-                        <textarea id="home-comment-input" class="comment-input" type="text" placeholder="Write comment..."></textarea>
-                        <button id="home-comment-submit" onclick="return postComment('home')" >Add comment</button>
-                        <br>
-                        <br>
-                        <button onclick="return updateComments('home')">Update comments</button>
-                    </div>
-                </div>
+                <div class="tab-content">
+                    <div role="tabpanel" id="home" class="tab-pane fade in active">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-4 col-xs-12">
+                                    <h2>Welcome!</h2>
+                                    <dl class="dl-horizontal">
+                                        <dt>First name:</dt><dd> <span id="nameField"></span></dd>
+                                        <dt>Family name:</dt><dd> <span id="familyField"></span></dd>
+                                        <dt>Email:</dt><dd> <span id="home-emailField"></span></dd>
+                                        <dt>Gender:</dt><dd> <span id="genderField"></span></dd>
+                                        <dt>City:</dt><dd> <span id="cityField"></span></dd>
+                                        <dt>Country:</dt><dd> <span id="countryField"></span></dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <h2>Comment wall</h2>
+                                    <div id="home-comment-holder"></div>
+                                    <form>
+                                        <div class="form-group">
+                                            <textarea id="home-comment-input" class="form-control" type="text" placeholder="Write comment..." rows="4"></textarea> 
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-success" id="home-comment-submit" onclick="return postComment('home')">Post comment</button>
+                                            <button class="btn btn-default" onclick="return updateComments('home')">Update comments</button>
+                                        </div>
+                                    </form>
 
-                <div id="Browse" class="tabcontent">
-                    <h3>Browse</h3>
-                    <input type="text" id="searchUserText" >
-                    <button id="searchUserButton" onclick="return browseUser()">Search user</button>
-                    <span class="alertText" id="browseAlert"></span><br>
-                    <div id="browseInfo">
-                    <hr>
-                        <div class="block">
-                            <p><b>First name:</b> <span id="browse-nameField"></span></p>
-                            <p><b>Family name:</b> <span id="browse-familyField"></span></p>
-                            <p><b>Email:</b> <span id="browse-emailField"></span></p>
-                            <p><b>Gender:</b> <span id="browse-genderField"></span></p>
-                            <p><b>City:</b> <span id="browse-cityField"></span></p>
-                            <p><b>Country:</b> <span id="browse-countryField"></span></p>
+                                    <br>
+                                    <br>
+
+                                </div>
+                            </div>
                         </div>
-                        <div class="block">
-                            <h2>Comment wall</h2>
-                            <div id="browse-comment-holder"></div>
-                            <textarea id="browse-comment-input" class="comment-input" type="text" placeholder="Write comment..."></textarea>
-                            <button id="browse-comment-submit" onclick="return postComment('browse')" >Add comment</button>
-                            <br>
-                            <br>
-                            <button onclick="return updateComments('browse')">Update comments</button>
+                    </div> <!-- Home pane -->
+
+                    <div role="tabpanel" id="browse" class="tab-pane fade">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12">   
+                                    <h2>Browse</h2>
+
+                                    <div class="form-group">
+                                        <label class="sr-only" for="searchUserText">Email address</label>
+                                        <input ondrop="drop(event)" ondragover="allowDrop(event)" type="email" class="form-control" id="searchUserText" placeholder="Email">
+                                    </div>
+                                    <button type="submit" class="btn btn-default" onclick="return browseUser()">Search user</button>
+                                    <small id="browseAlert"></small>
+
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <h3>Available users:</h3>
+                                    <p>Drag and drop a username to the searchfield</p>
+                                    <div id="listUsers"></div>
+                                </div>
+                            </div>
+                            <div id="browseInfo">
+                                <hr>
+                                <div class="row">
+
+                                    <div class="col-md-6 col-xs-12">
+                                        <h2>Twidder page:</h2>
+                                        <dl class="dl-horizontal">
+                                            <dt>First name:</dt><dd> <span id="browse-nameField"></span></dd>
+                                            <dt>Family name:</dt><dd> <span id="browse-familyField"></span></dd>
+                                            <dt>Email:</dt><dd> <span id="browse-emailField"></span></dd>
+                                            <dt>Gender:</dt><dd> <span id="browse-genderField"></span></dd>
+                                            <dt>City:</dt><dd> <span id="browse-cityField"></span></dd>
+                                            <dt>Country:</dt><dd> <span id="browse-countryField"></span></dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <h2>Comment wall</h2>
+                                        <div id="browse-comment-holder"></div>
+                                        <form>
+                                            <div class="form-group">
+                                                <textarea id="browse-comment-input" class="form-control" type="text" placeholder="Write comment..." rows="4"></textarea> 
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-success" id="browse-comment-submit" onclick="return postComment('browse')">Post comment</button>
+                                                <button class="btn btn-default" onclick="return updateComments('browse')">Update comments</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </div><!-- Browse pane -->
 
-                <div id="Account" class="tabcontent">
-                    <h3>Change password</h3>
-                    <form id="changePasswordForm" onsubmit="return changePassword()" method="post">
-                        Old password: <input type="password" name="old" ><br>
-                        New password: <input type="password" name="new1" ><br>
-                        Repeat password: <input type="password" name="new2" ><br>
-                        <input type="submit" value="Change password">
-                        <span class="alertText" id="changeAlert"></span>
-                    </form>
+                    <div role="tabpanel" id="account" class="tab-pane fade">
+                        <div class="container">
+                            <h3>Change password</h3>
+                            <form class="form-horizontal" id="changePasswordForm" onsubmit="return changePassword()" method="post">
+                                <div class="form-group">
+                                    <label for="old" class="col-sm-3 control-label">Old password</label>
+                                    <div class="col-sm-9">
+                                        <input type="password" class="form-control" placeholder="Old password" name="old" id="old">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="new1" class="col-sm-3 control-label">New password</label>
+                                    <div class="col-sm-9">
+                                        <input type="password" class="form-control" placeholder="New password" name="new1" id="new1">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="new2" class="col-sm-3 control-label">Repeat password</label>
+                                    <div class="col-sm-9">
+                                        <input type="password" class="form-control" placeholder="Repeat your new password" name="new2" id="new2">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <button type="submit" class="btn btn-default">Change password</button>
+                                        <span id="changeAlert"></span>
+                                    </div>
+                                </div>
 
-                    <h4>Log Out</h4>
-                    <button onclick="logout()" >Log out!</button><br><br>
-                </div>
+                            </form>
 
+                            <h3>Log Out</h3>
+                            <button class="btn btn-warning" onclick="logout()" >Log out!</button><br><br>
+                        </div>
+                    </div> <!-- Account pane -->
+                </div><!-- Tab-content -->
             </div>
         </div>
     </script>
 </head>
 <body>
-<div id="placeholder"></div>
+    <div id="placeholder"></div>
 </body>
+
 </html>

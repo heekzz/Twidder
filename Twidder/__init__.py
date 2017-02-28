@@ -7,5 +7,5 @@ import json, hashlib, string, random
 __author__ = 'Fredrik Håkansson (freha309)'
 
 app = Flask(__name__, static_url_path='')
-
+app.debug = True
 import Twidder.views

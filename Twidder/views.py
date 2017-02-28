@@ -181,6 +181,25 @@ def post_message():
     return response.toJSON(), 200, {'Content-Type': 'application/json'}
 
 
+@app.route('/listAllUsers', methods=['GET'])
+def list_users():
+    token = request.args.get("token")
+    token_to_user = verify_token(token)
+
+    if token_to_user is not None:
+        users = list()
+        db_users = database_helper.find_user()
+
+        for db_user in db_users:
+            users.append(db_user['email'])
+
+        response =  ResponseMessage(True, "Users found", users)
+
+    else:
+        response = ResponseMessage(False, "Not authenticated")
+
+    return response.toJSON(), 200, {'Content-Type': 'application/json'}
+
 # Returns None if token is invalid
 # If valid, returns the user corresponding to the token
 def verify_token(token):
