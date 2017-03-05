@@ -27,6 +27,7 @@ displayView = function(){
 
             getUserData();
             listUsers();
+            loadChart();
         }
         else {
             view = document.getElementById("welcomeview");
@@ -169,7 +170,6 @@ function getUserData() {
         document.getElementById("cityField").innerHTML = user.city;
         document.getElementById("countryField").innerHTML = user.country;
         updateComments('home');
-        loadChart();
     };
     httpRequest("GET", "/getUserData?token="+getToken(), null, callback);
     return false;

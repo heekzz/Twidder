@@ -21,10 +21,10 @@ def socket():
 					client = clients.get(user['email'])
 					try:
 						client.send(ResponseMessage(True, "logout").toJSON())
-						send_chart_data()
 					except WebSocketError:
 						clients.pop(user['email'])
 				clients[user['email']] = ws
+				send_chart_data()
 	return '', 200
 
 
@@ -39,7 +39,11 @@ def send_chart_data():
 		user.to_object(db_user)
 		users.append(user)
 
-	response = ResponseMessage(True, "chart", users)
+	online_users = database_helper.get_loggedin()
+	print("Online users: %i" % len(online_users))
+	data = {"users": users, "online": len(online_users)}
+	response = ResponseMessage(True, "chart", data)
+	print(response.toJSON())
 	for email, client in clients.iteritems():
 		try:
 			client.send(response.toJSON())
@@ -66,7 +70,7 @@ def sign_in():
 			response = ResponseMessage(False, "Wrong password")
 	else:
 		response = ResponseMessage(False, "Wrong username")
-
+	send_chart_data()
 	return response.toJSON(), 200, {'Content-type': 'application/json'}
 
 
@@ -82,7 +86,7 @@ def sign_out():
 		response = ResponseMessage(True, "User logged out")
 	else:
 		response = ResponseMessage(False, "Not authenticated")
-
+	send_chart_data()
 	return response.toJSON(), 200, {'Content-type': 'application/json'}
 
 
@@ -103,7 +107,7 @@ def sign_up():
 		response = ResponseMessage(True, 'User added', {"token": token})
 	else:
 		response = ResponseMessage(False, 'User already exists')
-
+	send_chart_data()
 	return response.toJSON(), 200, {'Content-Type': 'application/json'}
 
 
@@ -153,7 +157,6 @@ def get_user_data_by_email(email):
 	else:
 		response = ResponseMessage(False, "Not authenticated")
 
-	send_chart_data()
 	return response.toJSON(), 200, {'Content-Type': 'application/json'}
 
 
@@ -226,6 +229,7 @@ def list_users():
 		response = ResponseMessage(False, "Not authenticated")
 
 	return response.toJSON(), 200, {'Content-Type': 'application/json'}
+
 
 # Returns None if token is invalid
 # If valid, returns the user corresponding to the token

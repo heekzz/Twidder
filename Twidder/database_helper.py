@@ -122,3 +122,7 @@ def remove_token(token):
     db.commit()
     return res
 
+
+# Fetches all logged in users
+def get_loggedin():
+    return query_db("SELECT * FROM LoggedInUsers")
