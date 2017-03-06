@@ -7,6 +7,7 @@ function connectSocket() {
             displayView();
         }
         if (socketData.message == "chart") {
+            console.log("Received chart data");
             updateChartData(socketData.data)
         }
     };
@@ -32,6 +33,8 @@ displayView = function(){
         else {
             view = document.getElementById("welcomeview");
             document.getElementById("placeholder").innerHTML = view.innerHTML;
+            onlineTimestamps = [0];
+            onlineUsers = [0];
         }
     };
     httpRequest("GET", "/getUserData?token="+getToken(),null ,callback);
@@ -125,6 +128,7 @@ function logout() {
         }
     };
     httpRequest("POST", "/logout?token="+getToken(), null, callback);
+
     return false;
 }
 

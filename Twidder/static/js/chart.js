@@ -1,10 +1,11 @@
 var countryData = new Map();
 var genderData = new Map();
-var onlineTimestamps = [];
-var onlineUsers = [];
+var onlineTimestamps = [0];
+var onlineUsers = [0];
 var onlineChart;
 var genderChart;
 var countryChart;
+var isPaused = false;
 
 // Creates charts
 function loadChart() {
@@ -73,32 +74,34 @@ function loadChart() {
 
         }
     });
-    var date = new Date().toLocaleTimeString("sv-SE");
     var oc = document.getElementById("onlineChart");
-    onlineUsers = [0, 0, 0, 0, 0, 0];
-    onlineTimestamps = [date,date,date,date,date,date,]
+    // onlineTimestamps = [date];
+    // onlineUsers = [0];
     onlineChart = new Chart(oc, {
         type: 'line',
         data: {
-            labels: [date, date, date, date, date, date],
+            labels: onlineTimestamps,
             datasets: [{
                 label: 'Online users',
                 data: onlineUsers,
+                borderColor: "#ea1e00",
+                backgroundColor: "#b54b43",
             }]
         },
         options: {
             scales: {
                 yAxes: [{
                     ticks: {
-                        min: 0,
-                        max: 10
+                        beginAtZero: true,
+                        suggestedMax: 5,
+                        fixedStepSize: 1
                     }
                 }],
                 xAxes : [ {
                     gridLines : {
                         display : false
                     }
-                } ]
+                } ],
             }
         }
     });
@@ -107,9 +110,11 @@ function loadChart() {
 
 // Updates the data in the chart
 function updateChartData(data) {
+    isPaused = true;
     genderData.clear();
+    countryData.clear();
     var users = data["users"];
-    console.log(users)
+
     for (var i = 0; i < users.length; i++) {
         var user = users[i];
         // Gender
@@ -138,19 +143,28 @@ function updateChartData(data) {
 
     }
 
-    // Assign data
+    // Online users
     onlineUsers.push(data["online"]);
-    onlineUsers.shift();
+    if(onlineUsers.length > 6)
+        onlineUsers.shift();
+    onlineTimestamps.push(new Date().toLocaleTimeString("sv-SE"));
+    if(onlineTimestamps.length > 6)
+        onlineTimestamps.shift();
 
-    genderChart.data.labels =  Array.from(genderData.keys());
-    genderChart.data.datasets[0].data = Array.from(genderData.values());
+    if (typeof genderChart !== "undefined" && typeof countryChart !== "undefined" && typeof onlineChart !== "undefined") {
+        // Assign data
+        genderChart.data.labels =  Array.from(genderData.keys());
+        genderChart.data.datasets[0].data = Array.from(genderData.values());
 
-    countryChart.data.labels =  Array.from(countryData.keys());
-    countryChart.data.datasets[0].data = Array.from(countryData.values());
+        countryChart.data.labels =  Array.from(countryData.keys());
+        countryChart.data.datasets[0].data = Array.from(countryData.values());
 
-    // Update charts
-    genderChart.update();
-    countryChart.update();
+        // Update charts
+        genderChart.update();
+        countryChart.update();
+        onlineChart.update();
+    }
+    isPaused = false;
 }
 
 function updateCharts(data) {
@@ -158,14 +172,3 @@ function updateCharts(data) {
 
 }
 
-setInterval(function(){
-    onlineTimestamps.push(new Date().toLocaleTimeString("sv-SE"));
-    onlineTimestamps.shift();
-
-    onlineUsers.push(onlineUsers[onlineUsers.length - 1]);
-    onlineUsers.shift();
-    console.log(onlineUsers)
-    onlineChart.data.datasets[0].data = onlineUsers;
-    onlineChart.data.labels = onlineTimestamps;
-    onlineChart.update();
-}, 5000);

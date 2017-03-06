@@ -123,6 +123,14 @@ def remove_token(token):
     return res
 
 
+# Removes email from logged in users database
+def remove_logged_in_user(email):
+    db = get_db()
+    res = db.execute("DELETE FROM LoggedInUsers WHERE email=?", (email,))
+    db.commit()
+    return res
+
+
 # Fetches all logged in users
 def get_loggedin():
     return query_db("SELECT * FROM LoggedInUsers")

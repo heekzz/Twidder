@@ -44,7 +44,7 @@ def send_chart_data():
 	data = {"users": users, "online": len(online_users)}
 	response = ResponseMessage(True, "chart", data)
 	print(response.toJSON())
-	for email, client in clients.iteritems():
+	for email, client in clients.items():
 		try:
 			client.send(response.toJSON())
 			print("Sent data to %s" % email)
@@ -70,7 +70,7 @@ def sign_in():
 			response = ResponseMessage(False, "Wrong password")
 	else:
 		response = ResponseMessage(False, "Wrong username")
-	send_chart_data()
+
 	return response.toJSON(), 200, {'Content-type': 'application/json'}
 
 
