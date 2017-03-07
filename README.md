@@ -6,5 +6,7 @@
 
 ## Alternatives used:
 Here follows a list of the alternatives from the lab instructions I have chosen to use
-* Styling and Responsive Design
-* Providing Live Data Presentation
+* Providing Live Data Presentation [3 points]
+* Use of HTML5 for Drag and Drop [1 point]
+* Testing Using Selenium [2 points]
+* Styling and Responsive Design [2 points]
