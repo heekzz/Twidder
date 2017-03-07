@@ -7,7 +7,7 @@ function connectSocket() {
             displayView();
         }
         if (socketData.message == "chart") {
-            console.log("Received chart data");
+            console.log("Received chart data ");
             updateChartData(socketData.data)
         }
     };

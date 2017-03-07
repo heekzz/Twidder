@@ -50,7 +50,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
-                                    <input type="submit" class="btn btn-default " value="Login">
+                                    <input id="login_submit" type="submit" class="btn btn-default " value="Login">
                                     <label class="alertText" id="login-alert"></label>
                                 </div>
                             </div>
@@ -114,7 +114,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
-                                    <input type="submit" class="btn btn-default" value="Sign up">
+                                    <input id="signup_submit" type="submit" class="btn btn-default" value="Sign up">
                                     <label class="alertText" id="signUp-alert"></label>
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
                     <li role="presentation"><a href="#browse" aria-controls="browse" role="tab" data-toggle="tab">Browse</a></li>
-                    <li role="presentation"><a href="#account" aria-controls="account" role="tab" data-toggle="tab">Account</a></li>
+                    <li role="presentation"><a id="account-tab" href="#account" aria-controls="account" role="tab" data-toggle="tab">Account</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -144,17 +144,24 @@
 
                             <div class="row">
                                 <!-- Charts -->
+                                <div class="charts">
                                 <div class="col-xs-12 col-sm-4">
+                                    <h4 class="text-center">Gender of registered users:</h4>
                                     <canvas id="genderChart" width="200" height="200"></canvas>
                                 </div>
                                 <div class="col-xs-12 col-sm-4">
+                                    <h4 class="text-center">Country origin of registered users:</h4>
                                     <canvas id="countryChart" width="200" height="200"></canvas>
                                 </div>
                                 <div class="col-xs-12 col-sm-4">
+                                    <h4 class="text-center">Current online users:</h4>
                                     <canvas id="onlineChart" width="200" height="200"></canvas>
                                 </div>
-                                <div class="clearfix visible-md-block visible-sm-block"></div>
 
+                                </div>
+                                <div class="clearfix visible-md-block visible-sm-block visible-lg-block"></div>
+
+                                <div class="user-info">
                                 <div class="col-xs-12 col-sm-4">
                                     <h2>Welcome!</h2>
                                     <dl class="dl-horizontal">
@@ -179,9 +186,7 @@
                                         </div>
                                     </form>
 
-                                    <br>
-                                    <br>
-
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -264,7 +269,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-9">
-                                        <button type="submit" class="btn btn-default">Change password</button>
+                                        <button id="change-submit" type="submit" class="btn btn-default">Change password</button>
                                         <span id="changeAlert"></span>
                                     </div>
                                 </div>
@@ -272,7 +277,7 @@
                             </form>
 
                             <h3>Log Out</h3>
-                            <button class="btn btn-warning" onclick="logout()" >Log out!</button><br><br>
+                            <button id="logout-button" class="btn btn-warning" onclick="logout()" >Log out!</button><br><br>
                         </div>
                     </div> <!-- Account pane -->
                 </div><!-- Tab-content -->
@@ -282,6 +287,9 @@
 </head>
 <body>
 <div id="placeholder"></div>
+<div class="footer">
+    <p class="text-center">&copy; Fredrik Håkansson - 2017</p>
+</div>
 </body>
 
 </html>

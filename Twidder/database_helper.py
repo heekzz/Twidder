@@ -74,6 +74,14 @@ def find_user(email=None):
         return result
 
 
+# Removes a user from the database
+def remove_user(email):
+    db = get_db()
+    res = db.execute("DELETE FROM Users WHERE email=?", (email,))
+    db.commit()
+    return res
+
+
 # Sets new password for the provided user
 def update_password(email, password):
     db = get_db()
