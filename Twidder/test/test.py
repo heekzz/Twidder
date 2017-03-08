@@ -18,6 +18,7 @@ class ChromeTestCase(unittest.TestCase):
 
 	def test_signup_wrong(self):
 		self.browser.get('http://localhost:5000')
+		self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'jumbotron')))
 		firstname = self.browser.find_element_by_id('firstname')
 		familyname = self.browser.find_element_by_id('familyname')
 		gender = Select(self.browser.find_element_by_id('gender'))
@@ -46,6 +47,7 @@ class ChromeTestCase(unittest.TestCase):
 		with app.app_context():
 			database_helper.remove_user(self.test_email)
 		self.browser.get('http://localhost:5000')
+		self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'jumbotron')))
 		firstname = self.browser.find_element_by_id('firstname')
 		familyname = self.browser.find_element_by_id('familyname')
 		gender = Select(self.browser.find_element_by_id('gender'))
@@ -76,6 +78,7 @@ class ChromeTestCase(unittest.TestCase):
 	def test_login(self):
 		self.add_test_user()
 		self.browser.get('http://localhost:5000')
+		self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'jumbotron')))
 		email = self.browser.find_element_by_id('login_email')
 		password = self.browser.find_element_by_id('login_password')
 
@@ -95,6 +98,7 @@ class ChromeTestCase(unittest.TestCase):
 	def test_change_password(self):
 		self.add_test_user()
 		self.browser.get('http://localhost:5000')
+		self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'jumbotron')))
 		email = self.browser.find_element_by_id('login_email')
 		password = self.browser.find_element_by_id('login_password')
 
@@ -127,6 +131,7 @@ class ChromeTestCase(unittest.TestCase):
 	def test_logout(self):
 		self.add_test_user()
 		self.browser.get('http://localhost:5000')
+		self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'jumbotron')))
 		email = self.browser.find_element_by_id('login_email')
 		password = self.browser.find_element_by_id('login_password')
 

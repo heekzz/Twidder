@@ -23,6 +23,7 @@ def socket():
 						client.send(ResponseMessage(True, "logout").toJSON())
 					except WebSocketError:
 						clients.pop(user['email'])
+						database_helper.remove_logged_in_user(user['email'])
 				clients[user['email']] = ws
 				send_chart_data()
 	return '', 200
@@ -50,6 +51,7 @@ def send_chart_data():
 			print("Sent data to %s" % email)
 		except WebSocketError:
 			clients.pop(email)
+			database_helper.remove_logged_in_user(email)
 
 
 @app.route('/')

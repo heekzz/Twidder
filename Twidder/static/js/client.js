@@ -15,24 +15,22 @@ function connectSocket() {
         var socketMessage = {"message": "login", "token": getToken()};
         webSocket.send(JSON.stringify(socketMessage));
     };
-
 }
 
 displayView = function(){
-    // the code required to display a view
+    // The code required to display a view
     var callback = function (response) {
         var view = null;
         if (getToken() != null && response.success == true) {
-            view = document.getElementById("profileview");
-            document.getElementById("placeholder").innerHTML = view.innerHTML;
+            // TODO: Change from context
 
-            getUserData();
+            var context = getUserData();
+            document.getElementById("placeholder").innerHTML = profileTemplate(context);
             listUsers();
             loadChart();
         }
         else {
-            view = document.getElementById("welcomeview");
-            document.getElementById("placeholder").innerHTML = view.innerHTML;
+            document.getElementById("placeholder").innerHTML = welcomeTemplate();
             onlineTimestamps = [0];
             onlineUsers = [0];
         }
@@ -167,13 +165,15 @@ function changePassword() {
 function getUserData() {
     var callback = function (response) {
         var user = response.data;
-        document.getElementById("nameField").innerHTML = user.firstname;
-        document.getElementById("familyField").innerHTML = user.familyname;
-        document.getElementById("home-emailField").innerHTML = user.email;
-        document.getElementById("genderField").innerHTML = user.gender;
-        document.getElementById("cityField").innerHTML = user.city;
-        document.getElementById("countryField").innerHTML = user.country;
-        updateComments('home');
+        console.log(user);
+        return user;
+        // document.getElementById("nameField").innerHTML = user.firstname;
+        // document.getElementById("familyField").innerHTML = user.familyname;
+        // document.getElementById("home-emailField").innerHTML = user.email;
+        // document.getElementById("genderField").innerHTML = user.gender;
+        // document.getElementById("cityField").innerHTML = user.city;
+        // document.getElementById("countryField").innerHTML = user.country;
+
     };
     httpRequest("GET", "/getUserData?token="+getToken(), null, callback);
     return false;
