@@ -1,33 +1,15 @@
-function connectSocket() {
-    var webSocket = new WebSocket("ws://localhost:5000/socket");
-    webSocket.onmessage = function (event) {
-        var socketData = JSON.parse(event.data)
-        if (socketData.message == "logout") {
-            sessionStorage.removeItem("token");
-            displayView();
-        }
-        if (socketData.message == "chart") {
-            console.log("Received chart data ");
-            updateChartData(socketData.data)
-        }
-    };
-    webSocket.onopen = function () {
-        var socketMessage = {"message": "login", "token": getToken()};
-        webSocket.send(JSON.stringify(socketMessage));
-    };
-}
-
 displayView = function(){
     // The code required to display a view
     var callback = function (response) {
         var view = null;
         if (getToken() != null && response.success == true) {
-            // TODO: Change from context
-
-            var context = getUserData();
-            document.getElementById("placeholder").innerHTML = profileTemplate(context);
-            listUsers();
-            loadChart();
+            var callback = function (response) {
+                var user = response.data;
+                document.getElementById("placeholder").innerHTML = profileTemplate(user);
+                listUsers();
+                loadChart();
+            };
+            httpRequest("GET", "/getUserData?token="+getToken(), null, callback);
         }
         else {
             document.getElementById("placeholder").innerHTML = welcomeTemplate();
@@ -41,6 +23,25 @@ displayView = function(){
 window.onload = function(){
     displayView();
 };
+
+
+function connectSocket() {
+    var webSocket = new WebSocket("ws://localhost:5000/socket");
+    webSocket.onmessage = function (event) {
+        var socketData = JSON.parse(event.data)
+        if (socketData.message == "logout") {
+            sessionStorage.removeItem("token");
+            displayView();
+        }
+        if (socketData.message == "chart") {
+            updateChartData(socketData.data)
+        }
+    };
+    webSocket.onopen = function () {
+        var socketMessage = {"message": "login", "token": getToken()};
+        webSocket.send(JSON.stringify(socketMessage));
+    };
+}
 
 
 function validateSignUp() {
@@ -99,7 +100,6 @@ function login() {
     var callback = function (response) {
         if(response.success == true) {
             token = response.data.token;
-            console.log("Token: " + token);
             sessionStorage.setItem("token", token);
             connectSocket();
             displayView();
@@ -161,23 +161,6 @@ function changePassword() {
     return false;
 }
 
-
-function getUserData() {
-    var callback = function (response) {
-        var user = response.data;
-        console.log(user);
-        return user;
-        // document.getElementById("nameField").innerHTML = user.firstname;
-        // document.getElementById("familyField").innerHTML = user.familyname;
-        // document.getElementById("home-emailField").innerHTML = user.email;
-        // document.getElementById("genderField").innerHTML = user.gender;
-        // document.getElementById("cityField").innerHTML = user.city;
-        // document.getElementById("countryField").innerHTML = user.country;
-
-    };
-    httpRequest("GET", "/getUserData?token="+getToken(), null, callback);
-    return false;
-}
 
 function postComment(page) {
     var message = document.getElementById(page + "-comment-input").value;

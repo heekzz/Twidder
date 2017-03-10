@@ -124,7 +124,7 @@
         </div>
     </script>
 
-    <script type="text/x-handlebars-template" id="profileview" >
+    <script type="text/html" id="profileview" >
         <div class="container">
             <div class="row">
 
@@ -143,48 +143,48 @@
                             <div class="row">
                                 <!-- Charts -->
                                 <div class="charts">
-                                <div class="col-xs-12 col-sm-4">
-                                    <h4 class="text-center">Gender of registered users:</h4>
-                                    <canvas id="genderChart" width="200" height="200"></canvas>
-                                </div>
-                                <div class="col-xs-12 col-sm-4">
-                                    <h4 class="text-center">Country origin of registered users:</h4>
-                                    <canvas id="countryChart" width="200" height="200"></canvas>
-                                </div>
-                                <div class="col-xs-12 col-sm-4">
-                                    <h4 class="text-center">Current online users:</h4>
-                                    <canvas id="onlineChart" width="200" height="200"></canvas>
-                                </div>
+                                    <div class="col-xs-12 col-sm-4">
+                                        <h4 class="text-center">Gender of registered users:</h4>
+                                        <canvas id="genderChart" width="200" height="200"></canvas>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4">
+                                        <h4 class="text-center">Country origin of registered users:</h4>
+                                        <canvas id="countryChart" width="200" height="200"></canvas>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4">
+                                        <h4 class="text-center">Current online users:</h4>
+                                        <canvas id="onlineChart" width="200" height="200"></canvas>
+                                    </div>
 
                                 </div>
                                 <div class="clearfix visible-md-block visible-sm-block visible-lg-block"></div>
 
                                 <div class="user-info">
-                                <div class="col-xs-12 col-sm-4">
-                                    <h2>Welcome!</h2>
-                                    <dl class="dl-horizontal">
-                                        <dt>First name:</dt><dd> <span id="nameField">{{ firstname }}</span></dd>
-                                        <dt>Family name:</dt><dd> <span id="familyField">{{ familyname }}</span></dd>
-                                        <dt>Email:</dt><dd> <span id="home-emailField">{{ email }}</span></dd>
-                                        <dt>Gender:</dt><dd> <span id="genderField">{{ gender }}</span></dd>
-                                        <dt>City:</dt><dd> <span id="cityField">{{ city }}</span></dd>
-                                        <dt>Country:</dt><dd> <span id="countryField">{{ country }}</span></dd>
-                                    </dl>
-                                </div>
-                                <div class="col-xs-12 col-sm-8">
-                                    <h2>Comment wall</h2>
-                                    <div id="home-comment-holder"></div>
-                                    <form>
-                                        <div class="form-group">
-                                            <textarea id="home-comment-input" class="form-control" type="text" placeholder="Write comment..." rows="4"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="button" class="btn btn-success" id="home-comment-submit" onclick="return postComment('home')">Post comment</button>
-                                            <button class="btn btn-default" onclick="return updateComments('home')">Update comments</button>
-                                        </div>
-                                    </form>
+                                    <div class="col-xs-12 col-sm-4">
+                                        <h2>Welcome!</h2>
+                                        <dl class="dl-horizontal">
+                                            <dt>First name:</dt><dd> <span id="nameField">{{ firstname }}</span></dd>
+                                            <dt>Family name:</dt><dd> <span id="familyField">{{ familyname }}</span></dd>
+                                            <dt>Email:</dt><dd> <span id="home-emailField">{{ email }}</span></dd>
+                                            <dt>Gender:</dt><dd> <span id="genderField">{{ gender }}</span></dd>
+                                            <dt>City:</dt><dd> <span id="cityField">{{ city }}</span></dd>
+                                            <dt>Country:</dt><dd> <span id="countryField">{{ country }}</span></dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-8">
+                                        <h2>Comment wall</h2>
+                                        <div id="home-comment-holder"></div>
+                                        <form>
+                                            <div class="form-group">
+                                                <textarea id="home-comment-input" class="form-control" type="text" placeholder="Write comment..." rows="4"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-success" id="home-comment-submit" onclick="return postComment('home')">Post comment</button>
+                                                <button class="btn btn-default" onclick="return updateComments('home')">Update comments</button>
+                                            </div>
+                                        </form>
 
-                                </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -115,7 +115,7 @@ def change_password():
     return response.toJSON(), 200, {'Content-Type': 'application/json'}
 
 
-@app.route('/getUserData/')
+@app.route('/initProfileView/')
 def get_user_data_by_token():
     token = request.args.get("token")
     token_to_user = verify_token(token)
@@ -125,7 +125,7 @@ def get_user_data_by_token():
     return get_user_data_by_email(email)
 
 
-@app.route('/getUserData/<email>')
+@app.route('/initProfileView/<email>')
 def get_user_data_by_email(email):
     token = request.args.get("token")
     token_to_user = verify_token(token)
