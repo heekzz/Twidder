@@ -6,6 +6,7 @@ displayView = function(){
             var callback = function (response) {
                 var user = response.data;
                 document.getElementById("placeholder").innerHTML = profileTemplate(user);
+                updateComments('home', user['email']);
                 listUsers();
                 loadChart();
             };
@@ -39,6 +40,7 @@ function connectSocket() {
     };
     webSocket.onopen = function () {
         var socketMessage = {"message": "login", "token": getToken()};
+        console.log("Loggar in via socket");
         webSocket.send(JSON.stringify(socketMessage));
     };
 }

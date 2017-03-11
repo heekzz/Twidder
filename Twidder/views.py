@@ -5,6 +5,9 @@ from Twidder import app, database_helper, request, json, hashlib, random, string
 clients = {}
 
 
+# Route for WebSocket communication
+# Listening on and parsing JSON data.
+# Currently handling login/logout and updating the charts with new data
 @app.route("/socket")
 def socket():
 	if request.environ.get('wsgi.websocket'):
@@ -23,12 +26,13 @@ def socket():
 						client.send(ResponseMessage(True, "logout").toJSON())
 					except WebSocketError:
 						clients.pop(user['email'])
-						database_helper.remove_logged_in_user(user['email'])
+						# database_helper.remove_logged_in_user(user['email'])
 				clients[user['email']] = ws
 				send_chart_data()
 	return '', 200
 
 
+# Sends current data relevant for the charts via the WebSocket to all active clients.
 def send_chart_data():
 	print("In send chart")
 	global clients
