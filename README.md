@@ -10,3 +10,6 @@ Here follows a list of the alternatives from the lab instructions I have chosen 
 * Use of HTML5 for Drag and Drop [1 point]
 * Testing Using Selenium [2 points]
 * Styling and Responsive Design [2 points]
+* Client-side Templating Using a Third-Party API [1 point]
+
+Total: 9 points
